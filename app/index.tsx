@@ -1,106 +1,94 @@
-import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Image,
-  Pressable,
-  Dimensions,
-  FlatList,
-} from 'react-native';
+import { Text, View, ScrollView } from "react-native";
 
-
-const imageData = [
-  { id: '1', primary: 'https://picsum.photos/id/10/200', alternate: 'https://picsum.photos/id/11/200' },
-  { id: '2', primary: 'https://picsum.photos/id/12/200', alternate: 'https://picsum.photos/id/13/200' },
-  { id: '3', primary: 'https://picsum.photos/id/14/200', alternate: 'https://picsum.photos/id/15/200' },
-  { id: '4', primary: 'https://picsum.photos/id/16/200', alternate: 'https://picsum.photos/id/17/200' },
-  { id: '5', primary: 'https://picsum.photos/id/18/200', alternate: 'https://picsum.photos/id/19/200' },
-  { id: '6', primary: 'https://picsum.photos/id/20/200', alternate: 'https://picsum.photos/id/21/200' },
-  { id: '7', primary: 'https://picsum.photos/id/22/200', alternate: 'https://picsum.photos/id/23/200' },
-  { id: '8', primary: 'https://picsum.photos/id/24/200', alternate: 'https://picsum.photos/id/25/200' },
-  { id: '9', primary: 'https://picsum.photos/id/26/200', alternate: 'https://picsum.photos/id/27/200' },
+// --- DATA ABSEN RESMI ---
+const daftarMahasiswa = [
+  { stambuk: "105841107622", nama: "MUH. FIKRIR MAULANA" },
+  { stambuk: "105841107722", nama: "MUHAMMAD HASRADDIN HASNAN" },
+  { stambuk: "105841107822", nama: "MUHAMMAD DZULFIKAR Hidayat" },
+  { stambuk: "105841107922", nama: "AHMAD YANI" },
+  { stambuk: "105841108122", nama: "Rosfika Awalia" },
+  { stambuk: "105841108222", nama: "YOGI A. AMMAH" },
+  { stambuk: "105841108722", nama: "Usron" },
+  { stambuk: "105841108822", nama: "Rika Armayani" },
+  { stambuk: "105841109022", nama: "ANNAS URBACH NINGRUM" },
+  { stambuk: "105841109222", nama: "Besse Taleha" },
+  { stambuk: "105841109322", nama: "Dinda safitri" },
+  { stambuk: "105841109422", nama: "MUH. FARREL APTA INDRATAMA" },
+  { stambuk: "105841109622", nama: "FAUZAN AZHARI RAHMAN" },
+  { stambuk: "105841109722", nama: "MUH. FADHIL AHMAD" },
+  { stambuk: "105841109822", nama: "DAYANG AISYAH" },
+  { stambuk: "105841102222", nama: "ILFAUZA FEBRIANTY FAISAL" },
+  { stambuk: "105841110322", nama: "SABAN" },
+  { stambuk: "105841110422", nama: "NUR FADILLAH SARI" },
+  { stambuk: "105841110522", nama: "MUH. HIJRIL ILMAN" },
+  { stambuk: "105841110622", nama: "Wa Nanda Sulystrian" },
+  { stambuk: "105841110722", nama: "MUH. TEGAR AL FIKRI" },
+  { stambuk: "105841110822", nama: "RAYHANATUL JANNAH" },
+  { stambuk: "105841110922", nama: "HANNA MARYAM" },
+  { stambuk: "105841111022", nama: "Afifah Auliyah" },
 ];
 
-
-const GridImageCell = ({ primaryUrl, alternateUrl }: { primaryUrl: string; alternateUrl: string }) => {
-  const [isAlternate, setIsAlternate] = useState(false);
-  const [scale, setScale] = useState(1);
-
-  const handlePress = () => {
-    setIsAlternate(prev => !prev);
-    const newScale = scale * 1.2;
-    setScale(newScale <= 2 ? newScale : 2);
-  };
-
-  const imageUrl = isAlternate ? alternateUrl : primaryUrl;
-
-  const containerDynamicStyle = {
-    zIndex: scale > 1 ? 99 : 1,
-  };
-
-  const imageDynamicStyle = {
-    transform: [{ scale: scale }],
-  };
-
-  return (
-    <Pressable
-      onPress={handlePress}
-      style={[styles.cellContainer, containerDynamicStyle]}
-    >
-      <Image
-        source={{ uri: imageUrl }}
-        style={[styles.image, imageDynamicStyle]}
-        resizeMode="cover"
-      />
-    </Pressable>
-  );
-};
-
-
 export default function Index() {
+  // --- LOGIKA ---
+  const staticFonts = ['Poppins-Regular', 'Lato-Regular', 'Ubuntu-Regular', 'PTSerif-Regular', 'PressStart'];
+  const variableFonts = ['Inter-Variable', 'Montserrat-Variable', 'Oswald-Variable', 'Raleway-Variable', 'RobotoFlex-Variable'];
+  
+  const indexSaya = 20;
+  const dataSaya = daftarMahasiswa[indexSaya];
+  
+  let namaSebelum: { stambuk: string; nama: string; }[] = [];
+  let namaSesudah: { stambuk: string; nama: string; }[] = [];
+
+  namaSebelum = daftarMahasiswa.slice(indexSaya - 5, indexSaya);
+
+  const sisaSetelah = daftarMahasiswa.slice(indexSaya + 1);
+  if (sisaSetelah.length < 5) {
+    const kurangBerapa = 5 - sisaSetelah.length;
+    const ambilDariAwal = daftarMahasiswa.slice(0, kurangBerapa);
+    namaSesudah = [...sisaSetelah, ...ambilDariAwal];
+  } else {
+    namaSesudah = sisaSetelah.slice(0, 5);
+  }
+
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <FlatList
-        data={imageData}
-        renderItem={({ item }) => (
-          <GridImageCell
-            primaryUrl={item.primary}
-            alternateUrl={item.alternate}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-        numColumns={3}
-        key={'three-columns'} 
-      />
-    </SafeAreaView>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ alignItems: 'center' }}>
+        
+        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>
+          5 Nama Sebelum (Font Statis)
+        </Text>
+        {namaSebelum.map((mhs, index) => (
+          <Text key={mhs.stambuk} style={{ fontFamily: staticFonts[index % staticFonts.length], marginBottom: 20, fontSize: 16 }}>
+            {mhs.nama}
+          </Text>
+        ))}
+
+        <View style={{ marginVertical: 20, padding: 20, borderWidth: 2, borderColor: 'blue', alignItems: 'center' }}>
+          <Text style={{ marginBottom: 20, fontSize: 16, textAlign: 'center' }}>
+            {dataSaya.nama}
+          </Text>
+          <Text style={{ fontWeight: '800' }}>
+            {dataSaya.stambuk}
+          </Text>
+        </View>
+
+        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>
+          5 Nama Sesudah (Font Variabel)
+        </Text>
+        {namaSesudah.map((mhs, index) => (
+          <Text 
+            key={mhs.stambuk} 
+            style={{ 
+              fontFamily: variableFonts[index % variableFonts.length], 
+              fontWeight: (`${(index + 3) * 100}`) as '300' | '400' | '500' | '600' | '700', 
+              marginBottom: 20, 
+              fontSize: 16 
+            }}>
+            {mhs.nama}
+          </Text>
+        ))}
+
+      </View>
+    </ScrollView>
   );
 }
-
-const numColumns = 3;
-const gap = 8; 
-const screenWidth = Dimensions.get('window').width;
-
-
-const totalHorizontalGaps = gap * (numColumns + 1);
-const cellSize = (screenWidth - totalHorizontalGaps) / numColumns;
-
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: gap / 2, 
-  },
-  cellContainer: {
-    width: cellSize,
-    height: cellSize,
-    margin: gap / 2, 
-    backgroundColor: '#eee', 
-  },
-  
-  image: {
-    width: '100%',
-    height: '100%',
-    borderRadius: 8,
-  },
-});
