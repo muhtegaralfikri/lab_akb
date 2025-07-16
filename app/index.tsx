@@ -1,6 +1,5 @@
 import { Text, View, ScrollView } from "react-native";
 
-// --- DATA ABSEN RESMI ---
 const daftarMahasiswa = [
   { stambuk: "105841107622", nama: "MUH. FIKRIR MAULANA" },
   { stambuk: "105841107722", nama: "MUHAMMAD HASRADDIN HASNAN" },
@@ -29,15 +28,15 @@ const daftarMahasiswa = [
 ];
 
 export default function Index() {
-  // --- LOGIKA ---
+
   const staticFonts = ['Poppins-Regular', 'Lato-Regular', 'Ubuntu-Regular', 'PTSerif-Regular', 'PressStart'];
   const variableFonts = ['Inter-Variable', 'Montserrat-Variable', 'Oswald-Variable', 'Raleway-Variable', 'RobotoFlex-Variable'];
   
   const indexSaya = 20;
   const dataSaya = daftarMahasiswa[indexSaya];
   
-  let namaSebelum: { stambuk: string; nama: string; }[] = [];
-  let namaSesudah: { stambuk: string; nama: string; }[] = [];
+  let namaSebelum : { stambuk: string; nama: string; }[] = [];
+  let namaSesudah : { stambuk: string; nama: string; }[] = [];
 
   namaSebelum = daftarMahasiswa.slice(indexSaya - 5, indexSaya);
 
