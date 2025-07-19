@@ -1,5 +1,6 @@
 import { Text, View, ScrollView } from "react-native";
 
+// --- DATA ABSEN RESMI ---
 const daftarMahasiswa = [
   { stambuk: "105841107622", nama: "MUH. FIKRIR MAULANA" },
   { stambuk: "105841107722", nama: "MUHAMMAD HASRADDIN HASNAN" },
@@ -27,16 +28,21 @@ const daftarMahasiswa = [
   { stambuk: "105841111022", nama: "Afifah Auliyah" },
 ];
 
+
 export default function Index() {
 
-  const staticFonts = ['Poppins-Regular', 'Lato-Regular', 'Ubuntu-Regular', 'PTSerif-Regular', 'PressStart'];
-  const variableFonts = ['Inter-Variable', 'Montserrat-Variable', 'Oswald-Variable', 'Raleway-Variable', 'RobotoFlex-Variable'];
+  const allAvailableFonts = [
+    // 5 Font Statis
+    'Poppins-Regular', 'Lato-Regular', 'Ubuntu-Regular', 'PTSerif-Regular', 'PressStart',
+    // 5 Font Variabel
+    'Inter-Variable', 'Montserrat-Variable', 'Oswald-Variable', 'Raleway-Variable', 'RobotoFlex-Variable'
+  ];
   
   const indexSaya = 20;
   const dataSaya = daftarMahasiswa[indexSaya];
   
-  let namaSebelum : { stambuk: string; nama: string; }[] = [];
-  let namaSesudah : { stambuk: string; nama: string; }[] = [];
+  let namaSebelum: { stambuk: string; nama: string; }[] = [];
+  let namaSesudah: { stambuk: string; nama: string; }[] = [];
 
   namaSebelum = daftarMahasiswa.slice(indexSaya - 5, indexSaya);
 
@@ -52,33 +58,30 @@ export default function Index() {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
       <View style={{ alignItems: 'center' }}>
-        
         <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>
-          5 Nama Sebelum (Font Statis)
+          5 Nama Sebelum
         </Text>
         {namaSebelum.map((mhs, index) => (
-          <Text key={mhs.stambuk} style={{ fontFamily: staticFonts[index % staticFonts.length], marginBottom: 20, fontSize: 16 }}>
+          <Text key={mhs.stambuk} style={{ fontFamily: allAvailableFonts[index], marginBottom: 20, fontSize: 16 }}>
             {mhs.nama}
           </Text>
         ))}
-
         <View style={{ marginVertical: 20, padding: 20, borderWidth: 2, borderColor: 'blue', alignItems: 'center' }}>
-          <Text style={{ marginBottom: 20, fontSize: 16, textAlign: 'center' }}>
+          <Text style={{ fontFamily: 'PressStart', marginBottom: 20, fontSize: 16, textAlign: 'center' }}>
             {dataSaya.nama}
           </Text>
           <Text style={{ fontWeight: '800' }}>
             {dataSaya.stambuk}
           </Text>
         </View>
-
         <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>
-          5 Nama Sesudah (Font Variabel)
+          5 Nama Sesudah
         </Text>
         {namaSesudah.map((mhs, index) => (
           <Text 
             key={mhs.stambuk} 
             style={{ 
-              fontFamily: variableFonts[index % variableFonts.length], 
+              fontFamily: allAvailableFonts[5 + index], 
               fontWeight: (`${(index + 3) * 100}`) as '300' | '400' | '500' | '600' | '700', 
               marginBottom: 20, 
               fontSize: 16 
