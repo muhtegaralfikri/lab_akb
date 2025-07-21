@@ -1,12 +1,10 @@
 import { Text, View, ScrollView, StyleSheet } from "react-native";
-// 1. Impor semua keluarga ikon yang ingin Anda gunakan
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 
-// 2. Buat daftar 10 ikon yang ingin ditampilkan dalam sebuah array
 const iconsToDisplay = [
   { family: 'AntDesign', name: 'home', text: 'Rumah (AntDesign)' },
   { family: 'FontAwesome', name: 'car', text: 'Mobil (FontAwesome)' },
