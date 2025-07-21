@@ -1,96 +1,76 @@
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, StyleSheet } from "react-native";
+// 1. Impor semua keluarga ikon yang ingin Anda gunakan
+import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from '@expo/vector-icons/Feather';
 
-// --- DATA ABSEN RESMI ---
-const daftarMahasiswa = [
-  { stambuk: "105841107622", nama: "MUH. FIKRIR MAULANA" },
-  { stambuk: "105841107722", nama: "MUHAMMAD HASRADDIN HASNAN" },
-  { stambuk: "105841107822", nama: "MUHAMMAD DZULFIKAR Hidayat" },
-  { stambuk: "105841107922", nama: "AHMAD YANI" },
-  { stambuk: "105841108122", nama: "Rosfika Awalia" },
-  { stambuk: "105841108222", nama: "YOGI A. AMMAH" },
-  { stambuk: "105841108722", nama: "Usron" },
-  { stambuk: "105841108822", nama: "Rika Armayani" },
-  { stambuk: "105841109022", nama: "ANNAS URBACH NINGRUM" },
-  { stambuk: "105841109222", nama: "Besse Taleha" },
-  { stambuk: "105841109322", nama: "Dinda safitri" },
-  { stambuk: "105841109422", nama: "MUH. FARREL APTA INDRATAMA" },
-  { stambuk: "105841109622", nama: "FAUZAN AZHARI RAHMAN" },
-  { stambuk: "105841109722", nama: "MUH. FADHIL AHMAD" },
-  { stambuk: "105841109822", nama: "DAYANG AISYAH" },
-  { stambuk: "105841102222", nama: "ILFAUZA FEBRIANTY FAISAL" },
-  { stambuk: "105841110322", nama: "SABAN" },
-  { stambuk: "105841110422", nama: "NUR FADILLAH SARI" },
-  { stambuk: "105841110522", nama: "MUH. HIJRIL ILMAN" },
-  { stambuk: "105841110622", nama: "Wa Nanda Sulystrian" },
-  { stambuk: "105841110722", nama: "MUH. TEGAR AL FIKRI" },
-  { stambuk: "105841110822", nama: "RAYHANATUL JANNAH" },
-  { stambuk: "105841110922", nama: "HANNA MARYAM" },
-  { stambuk: "105841111022", nama: "Afifah Auliyah" },
+// 2. Buat daftar 10 ikon yang ingin ditampilkan dalam sebuah array
+const iconsToDisplay = [
+  { family: 'AntDesign', name: 'home', text: 'Rumah (AntDesign)' },
+  { family: 'FontAwesome', name: 'car', text: 'Mobil (FontAwesome)' },
+  { family: 'MaterialIcons', name: 'flight', text: 'Pesawat (MaterialIcons)' },
+  { family: 'Ionicons', name: 'game-controller-outline', text: 'Game (Ionicons)' },
+  { family: 'Feather', name: 'camera', text: 'Kamera (Feather)'},
+  { family: 'AntDesign', name: 'setting', text: 'Pengaturan (AntDesign)' },
+  { family: 'FontAwesome', name: 'music', text: 'Musik (FontAwesome)' },
+  { family: 'MaterialIcons', name: 'shopping-cart', text: 'Keranjang (MaterialIcons)' },
+  { family: 'Ionicons', name: 'book-outline', text: 'Buku (Ionicons)' },
+  { family: 'Feather', name: 'coffee', text: 'Kopi (Feather)'},
 ];
 
+const IconDisplay = ({ family, name }: { family: string, name: any }) => {
+  const size = 24;
+  const color = "black";
+
+  switch (family) {
+    case 'AntDesign':
+      return <AntDesign name={name} size={size} color={color} />;
+    case 'FontAwesome':
+      return <FontAwesome name={name} size={size} color={color} />;
+    case 'MaterialIcons':
+      return <MaterialIcons name={name} size={size} color={color} />;
+    case 'Ionicons':
+      return <Ionicons name={name} size={size} color={color} />;
+    case 'Feather':
+      return <Feather name={name} size={size} color={color} />;
+    default:
+      return null;
+  }
+};
 
 export default function Index() {
-
-  const allAvailableFonts = [
-    // 5 Font Statis
-    'Poppins-Regular', 'Lato-Regular', 'Ubuntu-Regular', 'PTSerif-Regular', 'PressStart',
-    // 5 Font Variabel
-    'Inter-Variable', 'Montserrat-Variable', 'Oswald-Variable', 'Raleway-Variable', 'RobotoFlex-Variable'
-  ];
-  
-  const indexSaya = 20;
-  const dataSaya = daftarMahasiswa[indexSaya];
-  
-  let namaSebelum: { stambuk: string; nama: string; }[] = [];
-  let namaSesudah: { stambuk: string; nama: string; }[] = [];
-
-  namaSebelum = daftarMahasiswa.slice(indexSaya - 5, indexSaya);
-
-  const sisaSetelah = daftarMahasiswa.slice(indexSaya + 1);
-  if (sisaSetelah.length < 5) {
-    const kurangBerapa = 5 - sisaSetelah.length;
-    const ambilDariAwal = daftarMahasiswa.slice(0, kurangBerapa);
-    namaSesudah = [...sisaSetelah, ...ambilDariAwal];
-  } else {
-    namaSesudah = sisaSetelah.slice(0, 5);
-  }
-
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ alignItems: 'center' }}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>
-          5 Nama Sebelum
-        </Text>
-        {namaSebelum.map((mhs, index) => (
-          <Text key={mhs.stambuk} style={{ fontFamily: allAvailableFonts[index], marginBottom: 20, fontSize: 16 }}>
-            {mhs.nama}
-          </Text>
-        ))}
-        <View style={{ marginVertical: 20, padding: 20, borderWidth: 2, borderColor: 'blue', alignItems: 'center' }}>
-          <Text style={{ fontFamily: 'PressStart', marginBottom: 20, fontSize: 16, textAlign: 'center' }}>
-            {dataSaya.nama}
-          </Text>
-          <Text style={{ fontWeight: '800' }}>
-            {dataSaya.stambuk}
-          </Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text style={styles.header}>10 Ikon Berbeda</Text>
+      {iconsToDisplay.map((icon, index) => (
+        <View key={index} style={styles.iconRow}>
+          <IconDisplay family={icon.family} name={icon.name} />
+          <Text style={styles.iconText}>{icon.text}</Text>
         </View>
-        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 20 }}>
-          5 Nama Sesudah
-        </Text>
-        {namaSesudah.map((mhs, index) => (
-          <Text 
-            key={mhs.stambuk} 
-            style={{ 
-              fontFamily: allAvailableFonts[5 + index], 
-              fontWeight: (`${(index + 3) * 100}`) as '300' | '400' | '500' | '600' | '700', 
-              marginBottom: 20, 
-              fontSize: 16 
-            }}>
-            {mhs.nama}
-          </Text>
-        ))}
-
-      </View>
+      ))}
     </ScrollView>
   );
 }
+
+// Style
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  header: {
+    fontSize: 24,
+    marginBottom: 20,
+    fontWeight: 'bold',
+  },
+  iconRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  iconText: {
+    marginLeft: 15,
+    fontSize: 16,
+  },
+});
